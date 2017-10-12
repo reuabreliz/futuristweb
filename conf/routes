@@ -1,0 +1,18 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+
+# Map static resources from the /public folder to the /assets URL path
+GET  /javascripts/*file        controllers.Assets.at(path="/public/javascripts", file)
+GET  /images/*file             controllers.Assets.at(path="/public/images", file)
+GET  /stylesheets/*file             controllers.Assets.at(path="/public/stylesheets", file)
+GET  /json/*file             controllers.Assets.at(path="/public/json", file)
+
+GET /hello controllers.ProjectHandler.list
+
+GET / controllers.ProjectHandler.list
+
+POST /hello controllers.ProjectHandler.save
+GET /project/new controllers.ProjectHandler.newProject

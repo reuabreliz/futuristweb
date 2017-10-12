@@ -1,0 +1,22 @@
+@(projectForm: Form[Project])(implicit flash: Flash, lang: Lang)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Project") {
+<h1>Projects</h1>
+
+@helper.form(action = routes.ProjectHandler.save()) {
+<fieldset>
+	<legend>
+		Here you can add a new Project	
+	</legend>
+
+	@helper.inputText(projectForm("id"))
+	@helper.inputText(projectForm("name"))
+	@helper.inputText(projectForm("githuburl"))
+	@helper.textarea(projectForm("user"))
+</fieldset>
+<p><input type="submit" class="submitbutton" value='New project'></p>
+}
+}

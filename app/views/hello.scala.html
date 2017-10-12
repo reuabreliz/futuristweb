@@ -1,0 +1,329 @@
+@(projects: List[Project])(implicit request: RequestHeader, flash: Flash, lang: Lang)
+
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+
+		<title>Futurist Enterprises</title>
+
+		<!-- Some styles -->
+		<style>
+			html {
+				height: 100%;
+				margin: 0px;
+			}
+
+			body {
+				position: relative;
+				min-height:100%;
+				width:100%;
+				margin: px;
+			}
+
+			.header {
+				background-image: url('@routes.Assets.at("/public/images", "logo1.jpeg")');
+        			background-size:cover;
+				top:0px;
+				bottom:0px;
+				left:0px;
+				right:0px;
+				z-index:-1;
+				min-height:100%;
+				height:100%;
+    			}	
+
+			.textcontent {
+				float: left;
+				width:60%;
+			}
+
+			.textcontent1 {
+				width:60%;
+			}
+	
+			.imgcontent {
+				width=40%
+				clear: both;
+			}
+
+			#mainmenu {
+				background-color: #26505C !important;
+			}
+
+			#graph1 {
+				max-width:600px;
+				height: 400px;
+				margin: auto;
+				overflow:hidden;
+			}
+
+			.steemitbody {
+				overflow: hidden;
+				max-height: 30rem;
+			}
+			.steemitbody img {
+				max-width: 30rem;
+			}
+
+			#blog {
+				padding-top:5rem;
+				padding-bottom:5rem;
+				max-height:600px;
+				overflow: hidden;
+			}
+
+			#blog h2 {
+				text-align:center;
+			}
+			
+			.readmore {
+				margin-top:-5rem;
+				height:5rem;
+				background-color:rgb(236,81,72,0.95);
+				position:relative;
+				border-radius: 0px 0px 0px 0px;
+				margin-bottom: 2rem;
+			}
+
+			.readmore a {
+				color: black;
+			}
+
+			#blogcontent {
+				max-height:562px;
+				margin-right:-15px;
+				overflow-y: scroll;
+				max-width:50rem;
+				margin:0 auto;
+			}
+
+
+			/* #86FFE8 */
+			.how {
+				padding-top:5rem;
+				padding-bootom:5rem;
+				background-color: rgb(101, 213, 245, 0.05);
+			}
+
+			#aboutus {
+				color: #CDD1D5;
+			}
+
+			.why {
+				padding-top:5rem;
+				padding-bottom:5rem;
+			}
+
+			.what {
+				padding-top:5rem;
+				padding-bottom:5rem;
+			}
+
+			#projects {
+				padding-top:5rem;
+				padding-bottom:5rem;
+			}
+
+			#projects .cardcontainer {
+				padding-left:5rem;
+				padding-right: 5rem;
+				width:50%;
+				float:left;
+			}
+
+			#projects h2 {
+				margin-bottom:3rem;
+				text-align: center;
+			}
+
+			h3 {
+			}
+
+			#contactus {
+				padding-top:5rem;
+				padding-bottom:5rem;
+				background-color: #F7F7F7;
+			}
+
+
+			#contribute {
+				clear:both;
+				padding-top:5rem;
+				padding-bottom:5rem;
+			}
+
+			.links line {
+				  stroke: #999;
+					    stroke-opacity: 0.6;
+			}
+
+			.nodes circle {
+				  stroke: #fff;
+					    stroke-width: 1.5px;
+			}
+		</style>
+
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+	
+	</head>
+
+	<body data-spy="scroll" data-target="#mainmenu">
+		<!-- Parallax Scrolling -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="@routes.Assets.at("/public/javascripts", "parallax.min.js")"></script>
+		<script>
+			$('.how').parallax();
+  		</script>
+
+		<!-- Bootstrap -->
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+		<!-- Steem -->
+		<script
+			  src="https://code.jquery.com/jquery-3.2.1.js"
+			  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+			  crossorigin="anonymous"></script>
+		<script>
+			$.get("https://api.steemjs.com/getDiscussionsByBlog?query={\"tag\": \"ned\",\"limit\": \"10\"}", function(data) {
+				for(i=0; i < data.length; i++) {
+					$("#blogcontent").append("<h5>" + data[i].title + "</h5>");
+					var steemitblogcontent = data[i].body;
+					$("#blogcontent").append("<div class='steemitbody modal-body'>" + steemitblogcontent + "</div>");
+					$("#blogcontent").append("<div class='readmore'><a href='" + "http://steemit.com/" + data[i].url + "'>Read more...</a></div>");
+				}
+		   });
+		</script>
+
+		<script src="@routes.Assets.at("/public/javascripts", "sigma.js")"></script>
+		<script src="@routes.Assets.at("/public/javascripts", "sigma.parsers.json.min.js")"></script>
+
+		<script>
+			$(function() {
+				graph1 = sigma.parsers.json("@routes.Assets.at("/public/json", "graph1.json")", {container: 'graph1', settings: {
+				      defaultNodeColor: '#ec5148',
+				      zoomingRatio: 1
+				}}, function() {
+					$(".sigma-mouse").remove(); //remove mouse events
+				} ); 
+
+				var documentHeight = $(window).height();
+				var menuHeight = $("#mainmenu").height();
+				$(".header").height(documentHeight-menuHeight-16);
+			});
+		</script>
+
+		<!-- github -->
+
+		<!-- d3js
+		<script src="https://d3js.org/d3.v4.min.js"></script>-->
+
+
+		<div class="header">
+		</div>
+
+
+		<!-- the menu -->
+		<nav id="mainmenu" class="sticky-top navbar navbar-expand-lg navbar-light bg-light">
+		  <a class="navbar-brand" href="#aboutus">About us</a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+			<a class="nav-link" href="#blog">Blog</a>
+		      </li>
+		      <li class="nav-item">
+			<a class="nav-link" href="#projects">Projects</a>
+		      </li>
+		      <li class="nav-item">
+			<a class="nav-link" href="#contribute">Contribute</a>
+		      </li>
+			<li class="nav-item">
+				<a class="nav-link" href="#contactus">Contact us</a>
+			</li>
+			@if(request.queryString.get("admin")) {
+			<li class="nav-item dropdown">
+			      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin Menü</a>
+			      <div class="dropdown-menu">
+				<a class="dropdown-item" href="@controllers.routes.ProjectHandler.newProject()" >
+					<i class="icon-plus"></i>New Project
+				</a>
+
+			      </div>
+			    </li>
+			<li class="nav-item">
+				</li>
+			}
+		    </ul>
+		    <form class="form-inline my-2 my-lg-0">
+		      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+		      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		    </form>
+		  </div>
+		</nav>
+		<div class="content">
+			<div id="aboutus" data-parallax="scroll" data-image-src="@routes.Assets.at("/public/images", "background1.jpeg")" >
+				<div class="why textcontent1">
+					<h3>Why we do our thing</h3>	
+					<p>We at futurist.enterprises believe, that together we can create a better, happier future. We have the vision of an utopic world in our mind, not because the present promises a wonderful future, but because that is the direction we want to go.
+					We believe that life is too short to work on boring projects, that do not lead us anywhere - but our love for what we do will even make the road to utopia a great experience.
+					We invite you to connect and be a part of that great journey</p>
+				</div>
+				<div class="how">
+					<div class="textcontent">
+						<h3>How we do our thing</h3>
+						<p>Through our worldview, where we experience everything as a chance and none as an opponent we see, how present problems can be solved in a way they lead us to utopia. Our greatest potential lies in that we love what we do and we have a network of people who love what they do - we are highly flexible and together we are creating perfection.</p> 
+						<p>Nature, technology, science, spirituality, love, family, economy, health, psychology and so on are no separate worlds for us, but one unity.Profit from our worldview as well as from our perfect network - we will analyse your situation and find the perfect solution for your satisfaction.</p>
+					</div>
+					<div id="graph1" class="imgcontent" > </div>
+				</div>
+				<div class="what textcontent1">
+					<h3>What is our thing</h3>
+					<p>At the moment we are working on this platform - a place to connect and a first prototype-frontend of a decentral working-environment, which connects the needs of people with their talents.</p>
+					<p>We move to an extensive use of Blockchain-Technology, since we believe that efficiency comes with decentralisation. Our work is of great value for anybody. If you need further explanation on how you can use it in your world, we are looking forward for your request.</p>
+					<p>Nature, technology, science, spirituality, love, family, economy, psychology and so on are no separate worlds for us, but one unity. Profit from our worldview as well as from our perfect network - we will analyse your situation and find the perfect solution for your satisfaction.</p>
+				</div>
+			</div>
+			<div id="blog" data-spy="scroll">
+				<h2>See us on Steemit <img width="33.6px" src="@routes.Assets.at("/public/images", "steemit.svg")" /></h2>
+				<div id="blogcontent"></div>
+			</div>
+			<div id="projects">
+				<h2>Watch our projects on github</h2>
+				<div id="accordion" role="tablist">
+					@for(project <- projects) {
+						<div class="cardcontainer">
+							<div class="card">
+								<div class="card-header" role="tab" id="heading@project.id">
+									<h6 class="mb-0">
+										<a data-toggle="collapse" href="#collapse@project.id" aria-expanded="true" aria-controls="collapseOne">
+											@project.name	
+										</a>
+									</h6>
+								</div>
+
+								<div id="collapse@project.id" class="collapse show" role="tabpanel" aria-labelledby="heading@project.id" data-parent="#accordion">
+									<div class="card-body">
+										<div class="github-card" data-github="@project.name" data-width="400" data-height="" data-theme="default"></div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+				}
+				</div>
+				<script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+			</div>
+			<div id="contribute">
+				<h3>Donate to our project</h3>
+			</div>
+		</div>
+		<div id="contactus">Contact us</div>
+	</body>
+</html>
