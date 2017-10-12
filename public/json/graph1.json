@@ -1,0 +1,42 @@
+{
+  "nodes": [
+    {
+      "id": "n0",
+      "label": "Futurist",
+      "x": -10,
+      "y": -10,
+      "size": 3
+    },
+    {
+      "id": "n1",
+      "label": "Network",
+      "x": -5,
+      "y": -7,
+      "size": 2
+    },
+    {
+      "id": "n2",
+      "label": "People",
+      "x": -4,
+      "y": -9,
+      "size": 1
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source": "n0",
+      "target": "n1"
+    },
+    {
+      "id": "e1",
+      "source": "n1",
+      "target": "n2"
+    },
+    {
+      "id": "e2",
+      "source": "n2",
+      "target": "n0"
+    }
+  ]
+}
