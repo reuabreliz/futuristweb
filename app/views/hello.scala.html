@@ -51,6 +51,10 @@
 				background-color: #26505C !important;
 			}
 
+			#mainmenu a {
+				color: #CDD1D5 !important;
+			}
+
 			#graph1 {
 				max-width:600px;
 				height: 400px;
@@ -128,6 +132,7 @@
 			#projects .cardcontainer {
 				padding-left:5rem;
 				padding-right: 5rem;
+				margin-bottom:5rem;
 				width:50%;
 				float:left;
 			}
@@ -310,7 +315,7 @@
 
 								<div id="collapse@project.id" class="collapse show" role="tabpanel" aria-labelledby="heading@project.id" data-parent="#accordion">
 									<div class="card-body">
-										<div class="github-card" data-github="@project.name" data-width="400" data-height="" data-theme="default"></div>
+										<div class="github-card" data-github="@project.githuburl" data-width="400" data-theme="default"></div>
 
 									</div>
 								</div>
@@ -318,7 +323,8 @@
 						</div>
 				}
 				</div>
-				<script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+				                                <script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+
 			</div>
 			<div id="contribute">
 				<h3>Donate to our project</h3>

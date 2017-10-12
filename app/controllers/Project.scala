@@ -6,8 +6,9 @@ case class Project(
 object Project {
 
   var projects = Set(
-    Project(1, "d3", "https://github.com/lepture/github-cards", "lepture"),
-    Project(2, "steem", "https://github.com/steemit", "steemit")
+    Project(1, "github-cards", "lepture/github-cards", "lepture"),
+    Project(2, "steemit", "steem/steemit", "steem"),
+    Project(3, "futurist.enterprises", "reuabreliz/futuristweb", "reuabreliz")
   )
   def findAll = projects.toList.sortBy(_.name)
 
